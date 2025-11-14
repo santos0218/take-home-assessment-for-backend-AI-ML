@@ -21,4 +21,3 @@ export const commonSchemas = {
     limit: z.number().int().positive().max(100).default(10),
   }),
 };
-

@@ -12,7 +12,7 @@ class CacheService {
     this.cache.set(key, {
       data: value,
       expiresAt: now + (ttl || this.defaultTTL),
-      createdAt: now
+      createdAt: now,
     });
   }
 
@@ -36,7 +36,7 @@ class CacheService {
   has(key) {
     const entry = this.cache.get(key);
     if (!entry) return false;
-    
+
     if (Date.now() > entry.expiresAt) {
       this.cache.delete(key);
       return false;
@@ -101,7 +101,7 @@ class CacheService {
       misses: this.misses,
       hitRate: parseFloat(hitRate.toFixed(2)),
       oldestEntry: oldestEntry,
-      newestEntry: newestEntry
+      newestEntry: newestEntry,
     };
   }
 

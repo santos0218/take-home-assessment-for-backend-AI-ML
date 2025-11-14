@@ -371,7 +371,10 @@ describe('CacheService', () => {
 });
 
 // Test the destroyCacheService function separately
-import { destroyCacheService, cacheService as globalCacheService } from '../services/cache.service.js';
+import {
+  destroyCacheService,
+  cacheService as globalCacheService,
+} from '../services/cache.service.js';
 
 describe('destroyCacheService', () => {
   it('should destroy the global cache service', () => {

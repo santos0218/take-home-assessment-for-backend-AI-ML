@@ -7,4 +7,3 @@ export const config = {
   openaiApiKey: process.env.OPENAI_API_KEY || '', // Optional - mock service will be used if not set
   nodeEnv: process.env.NODE_ENV || 'development',
 };
-

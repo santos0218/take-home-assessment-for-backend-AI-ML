@@ -9,4 +9,3 @@ router.post('/sentiment', aiController.sentiment);
 router.post('/summarize', aiController.summarize);
 
 export default router;
-

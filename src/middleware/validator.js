@@ -1,6 +1,6 @@
 import { validate } from '../utils/validation.js';
 
-const createValidator = (target) => (schema) => (req, _res, next) => {
+const createValidator = target => schema => (req, _res, next) => {
   try {
     req[target] = validate(schema, req[target]);
     next();

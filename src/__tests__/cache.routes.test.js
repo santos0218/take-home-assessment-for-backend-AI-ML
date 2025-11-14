@@ -69,9 +69,7 @@ describe('Cache Routes Integration Tests', () => {
     it('should return correct data structure', async () => {
       cacheService.set('test', 'value');
 
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       const { data } = response.body;
       expect(data).toHaveProperty('size');
@@ -90,9 +88,7 @@ describe('Cache Routes Integration Tests', () => {
       cacheService.get('key1');
       cacheService.get('key1');
 
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body.data.hits).toBe(3);
       expect(response.body.data.misses).toBe(0);
@@ -104,9 +100,7 @@ describe('Cache Routes Integration Tests', () => {
       cacheService.get('key2'); // miss
       cacheService.get('key3'); // miss
 
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body.data.hits).toBe(0);
       expect(response.body.data.misses).toBe(3);
@@ -118,9 +112,7 @@ describe('Cache Routes Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 10));
       cacheService.set('key2', 'value2');
 
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       const { oldestEntry, newestEntry } = response.body.data;
       expect(oldestEntry).not.toBeNull();
@@ -129,9 +121,7 @@ describe('Cache Routes Integration Tests', () => {
     });
 
     it('should return null for oldest/newest with empty cache', async () => {
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body.data.oldestEntry).toBeNull();
       expect(response.body.data.newestEntry).toBeNull();
@@ -143,25 +133,19 @@ describe('Cache Routes Integration Tests', () => {
         cacheService.set(`key${i}`, `value${i}`);
       }
 
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body.data.size).toBe(100);
     });
 
     it('should return correct defaultTTL', async () => {
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body.data.defaultTTL).toBe(5 * 60 * 1000); // 5 minutes
     });
 
     it('should return maxSize as null (unlimited)', async () => {
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body.data.maxSize).toBeNull();
     });
@@ -185,27 +169,21 @@ describe('Cache Routes Integration Tests', () => {
     });
 
     it('should include success field in response', async () => {
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body).toHaveProperty('success');
       expect(response.body.success).toBe(true);
     });
 
     it('should include message field in response', async () => {
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.body).toHaveProperty('message');
       expect(response.body.message).toBe('Cache statistics retrieved successfully');
     });
 
     it('should return JSON content type', async () => {
-      const response = await request(app)
-        .get('/cache/stats')
-        .expect(200);
+      const response = await request(app).get('/cache/stats').expect(200);
 
       expect(response.headers['content-type']).toMatch(/application\/json/);
     });
@@ -213,27 +191,19 @@ describe('Cache Routes Integration Tests', () => {
 
   describe('Invalid Routes', () => {
     it('should return 404 for POST to /cache/stats', async () => {
-      await request(app)
-        .post('/cache/stats')
-        .expect(404);
+      await request(app).post('/cache/stats').expect(404);
     });
 
     it('should return 404 for PUT to /cache/stats', async () => {
-      await request(app)
-        .put('/cache/stats')
-        .expect(404);
+      await request(app).put('/cache/stats').expect(404);
     });
 
     it('should return 404 for DELETE to /cache/stats', async () => {
-      await request(app)
-        .delete('/cache/stats')
-        .expect(404);
+      await request(app).delete('/cache/stats').expect(404);
     });
 
     it('should return 404 for unknown cache routes', async () => {
-      await request(app)
-        .get('/cache/unknown')
-        .expect(404);
+      await request(app).get('/cache/unknown').expect(404);
     });
   });
 });

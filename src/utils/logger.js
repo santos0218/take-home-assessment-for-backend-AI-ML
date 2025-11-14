@@ -6,14 +6,14 @@ class Logger {
   formatMessage(level, message, ...args) {
     const timestamp = new Date().toISOString();
     const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
-    
+
     if (args.length === 0) {
       return `${prefix} ${message}`;
     }
-    
+
     if (this.isDevelopment || level === 'error') {
       try {
-        const argsStr = args.map(arg => 
+        const argsStr = args.map(arg =>
           arg instanceof Error ? { message: arg.message, stack: arg.stack } : arg
         );
         return `${prefix} ${message} ${JSON.stringify(argsStr)}`;
@@ -21,7 +21,7 @@ class Logger {
         return `${prefix} ${message} [Unable to stringify arguments]`;
       }
     }
-    
+
     return `${prefix} ${message}`;
   }
 
@@ -40,9 +40,8 @@ class Logger {
   }
 
   error(message, error, ...args) {
-    const errorDetails = error instanceof Error 
-      ? { message: error.message, stack: error.stack }
-      : error;
+    const errorDetails =
+      error instanceof Error ? { message: error.message, stack: error.stack } : error;
     console.error(this.formatMessage('error', message, errorDetails, ...args));
   }
 }

@@ -16,4 +16,3 @@ export function sendError(res, error, statusCode = 500) {
   };
   res.status(statusCode).json(response);
 }
-

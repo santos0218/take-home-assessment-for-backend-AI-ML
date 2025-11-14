@@ -12,4 +12,3 @@ export function errorHandler(err, _req, res, _next) {
   logger.error('Unhandled error', err);
   sendError(res, 'Internal server error', 500);
 }
-

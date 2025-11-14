@@ -217,7 +217,7 @@ describe('AI Service - Model Selection', () => {
         { role: 'assistant', content: 'Hi there!' },
         { role: 'user', content: 'How are you?' },
         { role: 'assistant', content: 'I am doing well!' },
-        { role: 'user', content: 'Great!' }
+        { role: 'user', content: 'Great!' },
       ];
 
       const response = await aiService.chatCompletion(messages, AI_MODELS.GPT_4);

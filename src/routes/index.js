@@ -10,4 +10,3 @@ router.use('/users', userRoutes);
 router.use('/cache', cacheRoutes);
 
 export default router;
-

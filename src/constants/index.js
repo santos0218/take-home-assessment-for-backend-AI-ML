@@ -31,4 +31,3 @@ export const CACHE_TTL = {
   SHORT: 60 * 1000, // 1 minute
   LONG: 30 * 60 * 1000, // 30 minutes
 };
-

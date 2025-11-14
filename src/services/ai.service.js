@@ -5,8 +5,33 @@ import { hash } from '../utils/encryption.js';
 import { AI_MODELS } from '../constants/index.js';
 
 // Optimized sentiment word sets for O(1) lookup
-const POSITIVE_WORDS = new Set(['love', 'great', 'excellent', 'amazing', 'wonderful', 'good', 'happy', 'pleased', 'fantastic', 'awesome', 'brilliant', 'perfect']);
-const NEGATIVE_WORDS = new Set(['hate', 'terrible', 'awful', 'bad', 'sad', 'angry', 'disappointed', 'horrible', 'worst', 'hateful', 'disgusting']);
+const POSITIVE_WORDS = new Set([
+  'love',
+  'great',
+  'excellent',
+  'amazing',
+  'wonderful',
+  'good',
+  'happy',
+  'pleased',
+  'fantastic',
+  'awesome',
+  'brilliant',
+  'perfect',
+]);
+const NEGATIVE_WORDS = new Set([
+  'hate',
+  'terrible',
+  'awful',
+  'bad',
+  'sad',
+  'angry',
+  'disappointed',
+  'horrible',
+  'worst',
+  'hateful',
+  'disgusting',
+]);
 
 // Mock AI responses for when OpenAI is not configured
 class MockAIService {
@@ -30,7 +55,7 @@ class MockAIService {
       return 'Hello! How can I help you today?';
     }
     if (lowerMessage.includes('help')) {
-      return 'I\'m here to help! What would you like to know?';
+      return "I'm here to help! What would you like to know?";
     }
     if (lowerMessage.includes('bye') || lowerMessage.includes('goodbye')) {
       return 'Goodbye! Have a great day!';
@@ -52,12 +77,12 @@ class MockAIService {
     const words = text.toLowerCase().split(/\W+/);
     let positiveCount = 0;
     let negativeCount = 0;
-    
+
     for (const word of words) {
       if (POSITIVE_WORDS.has(word)) positiveCount++;
       if (NEGATIVE_WORDS.has(word)) negativeCount++;
     }
-    
+
     if (positiveCount > negativeCount) return 'positive';
     if (negativeCount > positiveCount) return 'negative';
     return 'neutral';
@@ -66,21 +91,21 @@ class MockAIService {
   async summarizeText(text, maxLength = 100) {
     await this.simulateDelay();
     const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    
+
     if (sentences.length === 0) {
       const words = text.split(/\s+/);
       const wordCount = Math.min(Math.ceil(maxLength / 10), words.length);
       return words.slice(0, wordCount).join(' ') + '...';
     }
-    
+
     // Take first 30% of sentences, but ensure it fits maxLength
     const targetSentences = Math.max(1, Math.ceil(sentences.length * 0.3));
     const summary = sentences.slice(0, targetSentences).join('. ').trim();
-    
+
     if (summary.length <= maxLength * 1.5) {
       return summary + (summary.endsWith('.') ? '' : '.');
     }
-    
+
     // Fallback: truncate to maxLength
     return summary.substring(0, maxLength).trim() + '...';
   }
@@ -159,7 +184,8 @@ class OpenAIService {
   }
 
   async analyzeSentiment(text) {
-    const systemPrompt = 'You are a sentiment analysis expert. Analyze the sentiment of the given text and respond with one word: positive, negative, or neutral.';
+    const systemPrompt =
+      'You are a sentiment analysis expert. Analyze the sentiment of the given text and respond with one word: positive, negative, or neutral.';
     return this.generateText(text, systemPrompt);
   }
 
@@ -174,7 +200,7 @@ class OpenAIService {
 class AIService {
   constructor() {
     this.mockFallback = new MockAIService();
-    
+
     if (config.openaiApiKey) {
       this.service = new OpenAIService(config.openaiApiKey);
       this.useOpenAI = true;
@@ -246,4 +272,3 @@ class AIService {
 }
 
 export const aiService = new AIService();
-
