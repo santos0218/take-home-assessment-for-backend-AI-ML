@@ -21,7 +21,7 @@ class UserStore {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    
+
     this.users.set(user.id, user);
     this.emailIndex.set(user.email, user.id);
     return user;

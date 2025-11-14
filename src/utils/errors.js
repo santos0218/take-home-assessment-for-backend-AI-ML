@@ -45,4 +45,3 @@ export class AIServiceError extends AppError {
     this.originalError = originalError;
   }
 }
-

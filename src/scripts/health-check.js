@@ -8,7 +8,7 @@ import { logger } from '../utils/logger.js';
 
 async function healthCheck() {
   logger.info('Running health check...');
-  
+
   const checks = {
     environment: config.nodeEnv,
     port: config.port,
@@ -26,4 +26,3 @@ async function healthCheck() {
 }
 
 healthCheck();
-
